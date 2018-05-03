@@ -22,9 +22,10 @@
     // This is our factory method. Return our module object here...
     return {
         version: '1.0.0',
-        baseURL: 'http://localhost/moodle/filter/poodll/ext/poodllrecorder.php',
-        //baseURL: 'https://cloud.poodll.com/filter/poodll/ext/poodllrecorder.php',
-        params: ['parent','timelimit','type','media','updatecontrol','width','height','id','iframeclass'],
+        //baseURL: 'http://localhost/moodle/filter/poodll/ext/poodllrecorder.php',
+        baseURL: 'https://cloud.poodll.com/filter/poodll/ext/poodllrecorder.php',
+        params: ['parent','timelimit','type','media','updatecontrol','width','height','id',
+            'iframeclass','transcode','transcribe','transcribelanguage','expiredays'],
 
         fetchContainers: function(classname){
             var divs = document.getElementsByClassName(classname);
