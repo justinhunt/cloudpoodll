@@ -22,16 +22,16 @@
     // This is our factory method. Return our module object here...
     return {
         version: '1.0.0',
-        //baseURL: 'http://localhost/moodle/filter/poodll/ext/poodllrecorder.php',
-        baseURL: 'https://cloud.poodll.com/filter/poodll/ext/poodllrecorder.php',
-        params: ['parent','timelimit','type','media','updatecontrol','width','height','id'],
+        baseURL: 'http://localhost/moodle/filter/poodll/ext/poodllrecorder.php',
+        //baseURL: 'https://cloud.poodll.com/filter/poodll/ext/poodllrecorder.php',
+        params: ['parent','timelimit','type','media','updatecontrol','width','height','id','iframeclass'],
 
         fetchContainers: function(classname){
             var divs = document.getElementsByClassName(classname);
             return divs;
         },
         autoCreateRecorders: function(classname){
-            if(!classname){classname='poodllrecorder';}
+            if(!classname){classname='cloudpoodll';}
             var containers = this.fetchContainers(classname);
             for(var ctr=0;ctr<containers.length;ctr++){
                 this.insertRecorder(containers[ctr]);
@@ -42,8 +42,10 @@
             this.insertRecorder(theelement);
         },
 
-        insertRecorder: function(container){
-            var attributes = this.parseAttributes(container);
+        insertRecorder: function(container, attributes){
+            if(attributes == undefined) {
+                attributes = this.parseAttributes(container);
+            }
             var iframe = this.createIframe(attributes);
             container.appendChild(iframe);
         },
@@ -58,14 +60,44 @@
             return attributes;
         },
         createIframe: function(attributes){
+
+            //fix up default attributes if the user did not set them
+            //parent
+            if(!attributes.hasOwnProperty('parent') ){
+                attributes['parent']=window.location.protocol + '//' + window.location.hostname;
+            }
+            //media
+            if(!attributes.hasOwnProperty('media') ){
+                attributes['media']='audio';
+            }
+
+            //build and set the iframe src url
             var iframe = document.createElement('iframe');
             var iframeurl = this.baseURL + '?';
             for (var property in attributes) {
                 iframeurl = iframeurl + property + '=' + attributes[property] + '&';
             }
             iframe.setAttribute('src', iframeurl);
-            iframe.setAttribute('width', attributes.width);
-            iframe.setAttribute('height', attributes.height);
+
+            //do any iframe attributes that we need to
+            //width and height (only if no iframe class specified)
+            //see here for responsive iframe ..https://blog.theodo.fr/2018/01/responsive-iframes-css-trick/
+            if(attributes.hasOwnProperty('iframeclass')) {
+                iframe.setAttribute('class', attributes.iframeclass);
+            }else{
+                if(!attributes.hasOwnProperty('width') ){
+                    attributes['width']=350;
+                }
+                iframe.setAttribute('width', attributes.width);
+                if(!attributes.hasOwnProperty('height') ){
+                    if(attributes['media']=='audio') {
+                        attributes['height'] = 250;
+                    }else{
+                        attributes['height'] = 550;
+                    }
+                }
+                iframe.setAttribute('height', attributes.height);
+            }
             iframe.setAttribute('frameBorder', 0);
             iframe.setAttribute('allow', 'camera,microphone');
             return iframe;
