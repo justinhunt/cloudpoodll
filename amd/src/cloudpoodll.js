@@ -21,11 +21,10 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.0.0',
-        //baseURL: 'http://localhost/moodle/filter/poodll/ext/poodllrecorder.php',
-        baseURL: 'https://cloud.poodll.com/filter/poodll/ext/poodllrecorder.php',
+        version: '1.1.2',
+        baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
         params: ['parent','timelimit','type','media','updatecontrol','width','height','id',
-            'iframeclass','transcode','transcribe','transcribelanguage','expiredays'],
+            'iframeclass','transcode','transcribe','transcribelanguage','expiredays','owner','region','token','localloader'],
 
         fetchContainers: function(classname){
             var divs = document.getElementsByClassName(classname);
@@ -74,7 +73,16 @@
 
             //build and set the iframe src url
             var iframe = document.createElement('iframe');
-            var iframeurl = this.baseURL + '?';
+
+            //set up the base URL for the iframe
+            //if we need to load locally from html we do that
+            var isIOS_safari = this.is_ios() && this.is_safari();
+            if(isIOS_safari && attributes.hasOwnProperty('localloader')){
+                var iframeurl = attributes['parent']  + attributes['localloader'] + '?';
+            }else {
+                var iframeurl = this.baseURL + '?';
+            }
+
             for (var property in attributes) {
                 iframeurl = iframeurl + property + '=' + attributes[property] + '&';
             }
@@ -116,15 +124,23 @@
         },
         initEvents: function(){
             var that = this;
-            window.onmessage = function(e) {
+            window.addEventListener('message', function(e) {
                 var data = e.data;
                 if (data && data.hasOwnProperty('id') && data.hasOwnProperty('type')){
                     that.theCallback(data);
                 }
-            };
+            });
         },
         fetchroot: function(){
             return root;
-        }
+        },
+
+        is_safari: function(){
+            return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        },
+
+        is_ios: function(){
+            return  /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        },
     };//end of returned object (poodllcloud)
 });//end of factory method container
