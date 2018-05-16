@@ -17,7 +17,7 @@ function fetchToken()
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => 'https://cloud.poodll.com/login/token.php?username=testuser&password=TestUser-01&service=cloudpoodll'
+        CURLOPT_URL => 'https://cloud.poodll.com/login/token.php?username=testuser&password=TestUser-01&service=cloud_poodll'
     ));
 // Send the request & save response to $resp
     $resp = curl_exec($curl);
