@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.1.2',
+        version: '1.1.4',
         baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
         params: ['parent','timelimit','type','media','updatecontrol','width','height','id',
@@ -78,7 +78,7 @@
 
             //set up the base URL for the iframe
             //if we need to load locally from html we do that
-            var isIOS_safari = this.is_ios() && this.is_safari();
+            var isIOS_safari = this.is_ios() || this.is_safari();
             if(isIOS_safari && attributes.hasOwnProperty('localloader')){
                 var iframeurl = attributes['parent']  + attributes['localloader'] + '?';
             }else {
