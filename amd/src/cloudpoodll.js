@@ -23,8 +23,10 @@
     return {
         version: '1.1.2',
         baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
+        //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
         params: ['parent','timelimit','type','media','updatecontrol','width','height','id',
-            'iframeclass','transcode','transcribe','transcribelanguage','expiredays','owner','region','token','localloader'],
+            'iframeclass','transcode','transcribe','language','transcribevocab',
+            'expiredays','owner','region','token','localloader','notificationurl','speechevents'],
 
         fetchContainers: function(classname){
             var divs = document.getElementsByClassName(classname);
