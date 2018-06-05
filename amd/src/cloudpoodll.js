@@ -117,10 +117,9 @@
             if(data.type =='filesubmitted'){
                 var inputControl = data.updatecontrol;
                 var pokeInput = document.getElementById(inputControl);
-                var shortUrl = data.cloudroot + data.cloudfilename;
-                //var filename = data.cloudfilename;
+                var theurl = data.mediaurl;
                 if (pokeInput) {
-                    pokeInput.value = shortUrl;
+                    pokeInput.value = theurl;
                 }
             }
         },
