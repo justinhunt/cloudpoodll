@@ -17,7 +17,8 @@ function fetchToken()
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => 'https://cloud.poodll.com/login/token.php?username=localhostuser&password=123456789ABCDEF&service=cloud_poodll'
+        //CURLOPT_URL => 'http://localhost/moodle/login/token.php?username=testuser&password=TestUser-01&service=cloud_poodll'
+        CURLOPT_URL => 'https://cloud.poodll.com/login/token.php?username=testuser&password=TestUser-01&service=cloud_poodll'
     ));
 // Send the request & save response to $resp
     $resp = curl_exec($curl);
@@ -39,19 +40,22 @@ function fetchToken()
     <meta charset="UTF-8">
     <title>CloudPoodllTester</title>
     <script src="https://cdn.jsdelivr.net/gh/justinhunt/cloudpoodll@latest/amd/build/cloudpoodll.min.js" type="text/javascript"></script>
-
+    <!-- script src="http://localhost/moodle/local/cpapi/cloudpoodll/amd/src/cloudpoodll.js" type="text/javascript"></script -->
 </head>
 <body>
 --Recorder below here--
 <div class="cloudpoodll"
-     data-id="recorder1"
+     data-id="banana1"
      data-localloader="/poodllloader.html"
      data-width="450"
      data-transcode="1"
+     data-transcribe="1"
+     data-speechevents="1"
+     data-language="en-US"
      data-media="video"
      data-owner="jerry@poodll.com"
      data-height="500"
-     data-region="tokyo"
+     data-region="useast1"
      data-expiredays="180"
      data-parent="http://localhost"
      data-token="<?= $token ?>"></div>
@@ -60,7 +64,6 @@ function fetchToken()
 <script type="text/javascript">
 CloudPoodll.autoCreateRecorders("cloudpoodll");
 CloudPoodll.theCallback=function(thedata){
-    console.log(thedata);
     switch (thedata.type){
         case 'error':
             alert('Error: ' + thedata.message);
@@ -75,6 +78,8 @@ CloudPoodll.theCallback=function(thedata){
         case 'transcriptioncomplete':
             alert('transcriptioncomplete:' + thedata.transcription);
             break;
+        default:
+            console.log(thedata.type,thedata);
     }
 };
 CloudPoodll.initEvents();
