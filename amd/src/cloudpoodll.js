@@ -21,11 +21,11 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.1.7',
+        version: '1.1.8',
         baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
-        params: ['parent','timelimit','type','media','updatecontrol','width','height','id',
-            'iframeclass','transcode','transcribe','language','transcribevocab',
+        params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
+            'iframeclass','transcode','transcribe','subtitle','language','transcribevocab',
             'expiredays','owner','region','token','localloader','notificationurl','speechevents','hints'],
 
         fetchContainers: function(classname){
