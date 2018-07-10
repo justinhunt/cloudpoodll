@@ -46,10 +46,12 @@ function fetchToken()
 --Recorder below here--
 <div class="cloudpoodll"
      data-id="banana1"
+     data-appid="poodll"
      data-localloader="/poodllloader.html"
      data-width="450"
      data-transcode="1"
      data-transcribe="1"
+     data-subtitle="0"
      data-speechevents="1"
      data-language="en-US"
      data-media="video"
