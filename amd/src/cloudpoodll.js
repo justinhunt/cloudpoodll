@@ -21,12 +21,12 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.1.8',
+        version: '1.1.9',
         baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
             'iframeclass','transcode','transcribe','subtitle','language','transcribevocab',
-            'expiredays','owner','region','token','localloader','notificationurl','speechevents','hints'],
+            'expiredays','owner','region','token','localloader','notificationurl','speechevents','hints','alreadyparsed'],
 
         fetchContainers: function(classname){
             var divs = document.getElementsByClassName(classname);
@@ -49,7 +49,10 @@
                 attributes = this.parseAttributes(container);
             }
             var iframe = this.createIframe(attributes);
-            container.appendChild(iframe);
+            if(iframe) {
+                container.appendChild(iframe);
+                container.setAttribute('data-alreadyparsed','true');
+            }
         },
         parseAttributes: function(container){
             var attributes = {};
@@ -62,6 +65,14 @@
             return attributes;
         },
         createIframe: function(attributes){
+
+            //cancel out if this div was already processed
+            if(attributes.hasOwnProperty('alreadyparsed') ){
+                if(attributes['alreadyparsed']=='true'){
+                    console.log("Can only parse a cloudpoodll element once. Cancelling.");
+                    return false;
+                }
+            }
 
             //fix up default attributes if the user did not set them
             //parent
