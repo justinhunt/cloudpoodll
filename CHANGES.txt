@@ -1,5 +1,8 @@
 Change List
 =========
+Version 1.2.2
+-Eek. Fixed bug in local loading
+
 Version 1.2.1
 -Added ability to force local loading
 

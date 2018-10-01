@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.0',
+        version: '1.2.2',
         baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
@@ -93,7 +93,7 @@
             if(!attributes.hasOwnProperty('localloader')){
                 var localloading = 'never';
             }else {
-                var localloading = attributes.hasOwnProperty('localloading') ? attributes.hasOwnProperty('localloading') : 'auto';
+                var localloading = attributes.hasOwnProperty('localloading') ? attributes['localloading'] : 'auto';
             }
 
             switch(localloading){
