@@ -47,6 +47,7 @@ function fetchToken()
 <div class="cloudpoodll"
      data-id="banana1"
      data-appid="poodll"
+     data-localloading="auto"
      data-localloader="/poodllloader.html"
      data-width="450"
      data-transcode="1"

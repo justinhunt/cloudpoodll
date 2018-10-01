@@ -26,7 +26,7 @@
         //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
             'iframeclass','transcode','transcribe','subtitle','language','transcribevocab',
-            'expiredays','owner','region','token','localloader','notificationurl',
+            'expiredays','owner','region','token','localloader','localloading','notificationurl',
             'speechevents','hints','alreadyparsed','fallback'],
 
         fetchContainers: function(classname){
@@ -89,14 +89,35 @@
             var iframe = document.createElement('iframe');
 
             //set up the base URL for the iframe
-            //if we need to load locally from html we do that
-            var isIOS_safari = this.is_ios() || this.is_safari();
-            if(isIOS_safari && attributes.hasOwnProperty('localloader')){
-                var iframeurl = attributes['parent']  + attributes['localloader'] + '?';
+            //if we need and can load locally from html we do that
+            if(!attributes.hasOwnProperty('localloader')){
+                var localloading = 'never';
             }else {
-                var iframeurl = this.baseURL + '?';
+                var localloading = attributes.hasOwnProperty('localloading') ? attributes.hasOwnProperty('localloading') : 'auto';
             }
 
+            switch(localloading){
+
+                case 'always':
+                    var iframeurl = attributes['parent'] + attributes['localloader'] + '?';
+                    break;
+
+                case 'never':
+                    var iframeurl = this.baseURL + '?';
+                    break;
+
+                case 'auto':
+                default:
+                    var isIOS_safari = this.is_ios() || this.is_safari();
+                    if(isIOS_safari) {
+                        var iframeurl = attributes['parent'] + attributes['localloader'] + '?';
+                    }else {
+                        var iframeurl = this.baseURL + '?';
+                    }
+                    break;
+            }
+
+            //build iframeurl based on baseurl and attributes
             for (var property in attributes) {
                 iframeurl = iframeurl + property + '=' + attributes[property] + '&';
             }
