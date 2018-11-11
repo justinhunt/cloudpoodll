@@ -51,6 +51,7 @@ function fetchToken()
      data-localloader="/poodllloader.html"
      data-width="450"
      data-transcode="1"
+     data-transcoder="default"
      data-transcribe="1"
      data-subtitle="0"
      data-speechevents="1"

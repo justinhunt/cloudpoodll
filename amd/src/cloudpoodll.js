@@ -25,7 +25,7 @@
         baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
-            'iframeclass','transcode','transcribe','subtitle','language','transcribevocab',
+            'iframeclass','transcode','transcoder','transcribe','subtitle','language','transcribevocab',
             'expiredays','owner','region','token','localloader','localloading','notificationurl',
             'speechevents','hints','alreadyparsed','fallback'],
 
