@@ -21,9 +21,9 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.3',
-        baseURL: 'https://cloud.poodll.com/local/cpapi/poodllloader.php',
-        //baseURL: 'http://localhost/moodle/local/cpapi/poodllloader.php',
+        version: '1.2.4',
+        baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
+       // baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
             'iframeclass','transcode','transcoder','transcribe','subtitle','language','transcribevocab',
             'expiredays','owner','region','token','localloader','localloading','notificationurl',
@@ -147,13 +147,17 @@
             return iframe;
         },
         theCallback: function(data) {
-            if(data.type =='filesubmitted'){
-                var inputControl = data.updatecontrol;
-                var pokeInput = document.getElementById(inputControl);
-                var theurl = data.mediaurl;
-                if (pokeInput) {
-                    pokeInput.value = theurl;
-                }
+            switch(data.type){
+                case 'filesubmitted':
+                    var inputControl = data.updatecontrol;
+                    var pokeInput = document.getElementById(inputControl);
+                    var theurl = data.mediaurl;
+                    if (pokeInput) {
+                        pokeInput.value = theurl;
+                    }
+                    break;
+                case 'error':
+                    alert('ERROR:' . data.message);
             }
         },
         initEvents: function(){
@@ -175,6 +179,6 @@
 
         is_ios: function(){
             return  /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        },
+        }
     };//end of returned object (poodllcloud)
 });//end of factory method container

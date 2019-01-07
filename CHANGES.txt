@@ -1,5 +1,11 @@
 Change List
 =========
+Version 1.2.4
+-added a default error handler. Most apps will never see it because they override the callback
+
+Version 1.2.3
+-Added support for Transcoder flag
+
 Version 1.2.2
 -Eek. Fixed bug in local loading
 
