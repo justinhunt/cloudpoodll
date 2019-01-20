@@ -17,8 +17,8 @@ function fetchToken()
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_RETURNTRANSFER => 1,
-        //CURLOPT_URL => 'http://localhost/moodle/login/token.php?username=testuser&password=TestUser-01&service=cloud_poodll'
-        CURLOPT_URL => 'https://cloud.poodll.com/login/token.php?username=testuser&password=TestUser-01&service=cloud_poodll'
+        //CURLOPT_URL => 'http://localhost/moodle/local/cpapi/poodlltoken.php?username=testuser&password=TestUser-01&service=cloud_poodll'
+        CURLOPT_URL => 'https://cloud.poodll.com/local/cpapi/poodlltoken.php?username=testuser&password=TestUser-01&service=cloud_poodll'
     ));
 // Send the request & save response to $resp
     $resp = curl_exec($curl);
