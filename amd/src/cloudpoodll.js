@@ -23,11 +23,11 @@
     return {
         version: '1.2.4',
         baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
-       // baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
+        //baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
             'iframeclass','transcode','transcoder','transcribe','subtitle','language','transcribevocab',
             'expiredays','owner','region','token','localloader','localloading','notificationurl',
-            'speechevents','hints','alreadyparsed','fallback'],
+            'sourcemimetype','speechevents','hints','alreadyparsed','fallback'],
 
         fetchContainers: function(classname){
             var divs = document.getElementsByClassName(classname);
@@ -84,6 +84,8 @@
             if(!attributes.hasOwnProperty('media') ){
                 attributes['media']='audio';
             }
+            //also store predicted mimetype
+            attributes['sourcemimetype'] = this.guess_mimetype(attributes['media']);
 
             //build and set the iframe src url
             var iframe = document.createElement('iframe');
@@ -179,6 +181,115 @@
 
         is_ios: function(){
             return  /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        }
+        },
+
+        guess_mimetype: function(mediatype){
+            var nVer = navigator.appVersion;
+            var nAgt = navigator.userAgent;
+            var browserName  = navigator.appName;
+            //decided no real benefit and some danger in detecting version, so commented it mostly
+            var fullVersion  = ''+parseFloat(navigator.appVersion);
+            var nameOffset,verOffset,ix;
+
+            if(nAgt.match('(?:Edge|EdgA|EdgiOS)')!==null) {
+                browserName="Edge";
+                //dont know how to get this and its probably not important yet
+                //fullVersion = '1.0';
+
+            // In Opera, the true version is after "Opera" or after "Version"
+            }else if ((verOffset=nAgt.indexOf("Opera"))!=-1) {
+                browserName = "Opera";
+                //fullVersion = nAgt.substring(verOffset+6);
+                //if ((verOffset=nAgt.indexOf("Version"))!=-1) fullVersion = nAgt.substring(verOffset+8);
+            }
+            // In MSIE, the true version is after "MSIE" in userAgent
+            else if ((verOffset=nAgt.indexOf("MSIE"))!=-1) {
+                browserName = "IE";
+                //fullVersion = nAgt.substring(verOffset+5);
+            }
+            // In Chrome, the true version is after "Chrome"
+            else if ((verOffset=nAgt.indexOf("Chrome"))!=-1) {
+                browserName = "Chrome";
+                //fullVersion = nAgt.substring(verOffset+7);
+            }
+            // In Safari, the true version is after "Safari" or after "Version"
+            else if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
+                browserName = "Safari";
+                //fullVersion = nAgt.substring(verOffset+7);
+                //if ((verOffset=nAgt.indexOf("Version"))!=-1)fullVersion = nAgt.substring(verOffset+8);
+            }
+            // In Firefox, the true version is after "Firefox"
+            else if ((verOffset=nAgt.indexOf("Firefox"))!=-1) {
+                browserName = "Firefox";
+                //fullVersion = nAgt.substring(verOffset + 8);
+                // In most other browsers, "name/version" is at the end of userAgent
+            }else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
+                (verOffset=nAgt.lastIndexOf('/')) )
+            {
+                browserName = nAgt.substring(nameOffset,verOffset);
+                //fullVersion = nAgt.substring(verOffset+1);
+                if (browserName.toLowerCase()==browserName.toUpperCase()) {
+                    browserName = navigator.appName;
+                }
+            }
+
+
+            //OS detection
+            var OS = "Unknown OS";
+            if (navigator.userAgent.indexOf("Win") != -1){OS = "Windows";}
+            if (navigator.userAgent.indexOf("Mac") != -1) {OS = "Macintosh";}
+            if (navigator.userAgent.indexOf("Linux") != -1){OS = "Linux";}
+            if (navigator.userAgent.indexOf("Android") != -1){OS = "Android";}
+            if (navigator.userAgent.indexOf("like Mac") != -1) {OS = "iOS";}
+
+
+            var browser={};
+            browser.name=browserName;
+            browser.version=fullVersion;
+            browser.OS=OS;
+
+            //predicted mimetype
+            var mimetype="unsupported/unsupported";
+            if(mediatype=='video'){
+                switch(browser.name){
+                    case 'Edge':
+                    case 'MSIE':
+                    case 'Safari':
+                        mimetype="unsupported/unsupported";
+                        break;
+                    case 'Firefox':
+                    case 'Chrome':
+                    case 'Opera':
+                    default:
+                        mimetype="video/webm";
+                }
+            }else{
+                switch(browser.name){
+                    case 'MSIE':
+                        mimetype="unsupported/unsupported";
+                        break;
+                    case 'Edge':
+                    case 'Safari':
+                        mimetype="audio/wav";
+                        break;
+                    case 'Firefox':
+                        mimetype="audio/ogg";
+                        break;
+                    case 'Chrome':
+                    case 'Opera':
+                    default:
+                        mimetype="audio/webm";
+                }
+            }
+            /*
+            document.write(''
+                +'Browser name  = '+browser.name+'<br>'
+                +'Full version  = '+browser.version+'<br>'
+                +'OS  = '+browser.OS+'<br>'
+                +'mimetype  = '+mimetype+'<br>'
+            )
+            */
+            return mimetype;
+        }//end of guess mimetype
     };//end of returned object (poodllcloud)
 });//end of factory method container

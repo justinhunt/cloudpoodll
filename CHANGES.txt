@@ -1,7 +1,11 @@
 Change List
 =========
+Version 1.2.5
+-fixed broken non-transcoding and added source media copys
+
 Version 1.2.4
 -added a default error handler. Most apps will never see it because they override the callback
+-added fast poodll lading
 
 Version 1.2.3
 -Added support for Transcoder flag
