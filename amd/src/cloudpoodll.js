@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.4',
+        version: '1.2.5',
         baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
@@ -183,7 +183,13 @@
             return  /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         },
 
-        guess_mimetype: function(mediatype){
+        guess_mimetype: function(mediatype, transcribe){
+
+            //if we are using Google Cloud Speech Transcribe then we only support audio/wav
+            if(transcribe==2){
+                return "audio/wav";
+            }
+
             var nVer = navigator.appVersion;
             var nAgt = navigator.userAgent;
             var browserName  = navigator.appName;

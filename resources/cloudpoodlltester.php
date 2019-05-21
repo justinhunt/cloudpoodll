@@ -73,11 +73,13 @@ CloudPoodll.theCallback=function(thedata){
             alert('Error: ' + thedata.message);
             break;
         case 'awaitingprocessing':
-            console.log('awaitingprocessing:' + thedata);
+            console.log('awaitingprocessing:');
+            console.log(thedata);
             break;
         case 'filesubmitted':
-            alert('filesubmitted:' + thedata.finalurl);
-            console.log('filesubmitted:' + thedata);
+            alert('filesubmitted:' + thedata.mediaurl);
+            console.log('filesubmitted:');
+            console.log(thedata);
             break;
         case 'transcriptioncomplete':
             alert('transcriptioncomplete:' + thedata.transcription);
