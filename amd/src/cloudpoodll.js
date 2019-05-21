@@ -85,7 +85,7 @@
                 attributes['media']='audio';
             }
             //also store predicted mimetype
-            attributes['sourcemimetype'] = this.guess_mimetype(attributes['media']);
+            attributes['sourcemimetype'] = this.guess_mimetype(attributes['media'],attributes['transcribe']);
 
             //build and set the iframe src url
             var iframe = document.createElement('iframe');
