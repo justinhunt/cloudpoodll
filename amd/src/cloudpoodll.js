@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.5',
+        version: '1.2.6',
         baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
@@ -70,7 +70,7 @@
             //cancel out if this div was already processed
             if(attributes.hasOwnProperty('alreadyparsed') ){
                 if(attributes['alreadyparsed']=='true'){
-                    console.log("Can only parse a cloudpoodll element once. Cancelling.");
+                   // console.log("Can only parse a cloudpoodll element once. Cancelling.");
                     return false;
                 }
             }
@@ -171,6 +171,19 @@
                 }
             });
         },
+        sendMessage: function(containerid,messageObject){
+
+            if(!messageObject.hasOwnProperty('type')){
+                //'All message objects must have at least the "type" property'
+                return;
+            }
+
+            var theiframe = document.getElementById(containerid).getElementsByTagName('iframe')[0];
+
+            //messageObject.id = this.id;
+            theiframe.contentWindow.postMessage(messageObject);
+
+        },
         fetchroot: function(){
             return root;
         },
@@ -260,8 +273,10 @@
                 switch(browser.name){
                     case 'Edge':
                     case 'MSIE':
+                        mimetype="video/webm";
+                        break;
                     case 'Safari':
-                        mimetype="unsupported/unsupported";
+                        mimetype="video/quicktime";
                         break;
                     case 'Firefox':
                     case 'Chrome':
@@ -272,7 +287,7 @@
             }else{
                 switch(browser.name){
                     case 'MSIE':
-                        mimetype="unsupported/unsupported";
+                        mimetype="audio/wav";
                         break;
                     case 'Edge':
                     case 'Safari':
