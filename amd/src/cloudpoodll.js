@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.7',
+        version: '1.2.8',
         baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
@@ -203,7 +203,7 @@
                 return "audio/wav";
             }
             //this is a bit hacky, we should base64decode hints and look for the value of hints.encoder
-            if(hints.includes('stereoaudio')){
+            if(hints && hints.includes('stereoaudio')){
                 return "audio/wav";
             }
 
