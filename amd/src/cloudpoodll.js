@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.6',
+        version: '1.2.7',
         baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
@@ -85,7 +85,7 @@
                 attributes['media']='audio';
             }
             //also store predicted mimetype
-            attributes['sourcemimetype'] = this.guess_mimetype(attributes['media'],attributes['transcribe']);
+            attributes['sourcemimetype'] = this.guess_mimetype(attributes['media'],attributes['transcribe'],attributes['hints']);
 
             //build and set the iframe src url
             var iframe = document.createElement('iframe');
@@ -196,10 +196,14 @@
             return  /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         },
 
-        guess_mimetype: function(mediatype, transcribe){
+        guess_mimetype: function(mediatype, transcribe, hints){
 
             //if we are using Google Cloud Speech Transcribe then we only support audio/wav
             if(transcribe==2){
+                return "audio/wav";
+            }
+            //this is a bit hacky, we should base64decode hints and look for the value of hints.encoder
+            if(hints.includes('stereoaudio')){
                 return "audio/wav";
             }
 
