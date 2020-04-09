@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.8',
+        version: '1.2.9',
         baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
@@ -145,7 +145,7 @@
                 iframe.setAttribute('height', attributes.height);
             }
             iframe.setAttribute('frameBorder', 0);
-            iframe.setAttribute('allow', 'camera,microphone');
+            iframe.setAttribute('allow', 'camera; microphone');
             return iframe;
         },
         theCallback: function(data) {
@@ -293,7 +293,6 @@
                     case 'MSIE':
                         mimetype="audio/wav";
                         break;
-                    case 'Edge':
                     case 'Safari':
                         mimetype="audio/wav";
                         break;
@@ -302,6 +301,7 @@
                         break;
                     case 'Chrome':
                     case 'Opera':
+                    case 'Edge':
                     default:
                         mimetype="audio/webm";
                 }
