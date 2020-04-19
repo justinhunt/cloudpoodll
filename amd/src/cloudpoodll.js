@@ -21,7 +21,7 @@
 })(this, function(root) {
     // This is our factory method. Return our module object here...
     return {
-        version: '1.2.9',
+        version: '1.3.0',
         baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
         //baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
