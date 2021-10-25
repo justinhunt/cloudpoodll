@@ -23,7 +23,7 @@
     return {
         version: '1.3.0',
         //baseURL: 'https://cloud.poodll.com/local/cpapi/fastpoodllloader.php',
-        baseURL: 'http://localhost/moodle/local/cpapi/fastpoodllloaderlocal.php',
+        baseURL: 'http://localhost/moodle/local/cpapi/localfastpoodllloader.php',
         params: ['parent','appid','timelimit','type','media','updatecontrol','width','height','id',
             'iframeclass','transcode','transcoder','transcribe','subtitle','language','transcribevocab',
             'expiredays','owner','region','token','localloader','localloading','notificationurl',

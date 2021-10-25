@@ -145,7 +145,7 @@
                 iframe.setAttribute('height', attributes.height);
             }
             iframe.setAttribute('frameBorder', 0);
-            iframe.setAttribute('allow', 'camera; microphone');
+            iframe.setAttribute('allow', 'camera; microphone; display-capture');
             return iframe;
         },
         theCallback: function(data) {
@@ -281,6 +281,8 @@
                         break;
                     case 'Safari':
                         mimetype="video/quicktime";
+                        //new mobile safari .. but how to detect?
+                        //mimetype="video/mp4";
                         break;
                     case 'Firefox':
                     case 'Chrome':
@@ -295,6 +297,8 @@
                         break;
                     case 'Safari':
                         mimetype="audio/wav";
+                        //new mobile safari ... but how do we know?
+                        mimetype="audio/mpa";
                         break;
                     case 'Firefox':
                         mimetype="audio/ogg";
